@@ -12,10 +12,11 @@
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --background: 200 50% 3%;
-      --btn-background: 200 10% 9%;
+      --background: 225, 6%, 13%;
+      --btn-background: 225, 4%, 16%;
       --btn-background-hover: 200 10% 12%;
       --foreground: 200 20% 96%;
+      --primary: #C82929;
     }
   }
 }
@@ -25,3 +26,6 @@
     @apply border-foreground/20;
   }
 }
+
+
+/* #0f0f15 #0a0809*/
