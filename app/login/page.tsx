@@ -64,38 +64,41 @@ export default async function Login({
         Back
       </Link>
 
+      <h1 className="text-5xl roboto-bold text-primary text-center mb-9">Login</h1>
+
         <div className="flex flex-col">
           <form className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
-            <label className="text-md" htmlFor="email">
+            <label className="text-xl" htmlFor="email">
               Email
             </label>
             <input
-              className="rounded-md px-4 py-2 bg-inherit border mb-6"
+              className="text-xl rounded-md px-4 py-3 bg-inherit border mb-4"
               name="email"
               placeholder="you@example.com"
               required
             />
-            <label className="text-md" htmlFor="password">
+            <label className="text-xl" htmlFor="password">
               Password
             </label>
             <input
-              className="rounded-md px-4 py-2 bg-inherit border mb-6"
+              className="text-xl rounded-md px-4 py-3 bg-inherit border mb-2"
               type="password"
               name="password"
               placeholder="••••••••"
               required
             />
+            <Link href="/" className="text-right text-primary mb-2 hover:text-primary-hover">Forgot Password?</Link>
             <SubmitButton
               formAction={signIn}
-              className="bg-primary rounded-md px-4 py-2 text-foreground mb-2"
+              className="bg-primary text-xl rounded-md px-4 py-3 text-foreground mb-2 hover:bg-primary-hover"
               pendingText="Signing In..."
             >
               Login
             </SubmitButton>
           </form>
-          <div className="text-center">Don't have an account? <Link href="/register" className="text-primary">Register</Link></div>
+          <div className="text-center">Don't have an account? <Link href="/register" className="text-primary hover:text-primary-hover">Register</Link></div>
           {searchParams?.message && (
-            <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+            <p className="text-lg rounded-md mt-4 p-6 bg-zinc-700 text-foreground text-center">
               {searchParams.message}
             </p>
           )}
