@@ -16,14 +16,14 @@
     --foreground: hsl(200 50% 3%);
   }
 
-  @media (prefers-color-scheme: dark) {
+  /* @media (prefers-color-scheme: dark) {
     :root {
       --background: hsl(225, 6%, 13%);
       --btn-background: hsl(225, 4%, 16%);
       --btn-background-hover: hsl(200 10% 12%);
       --foreground: hsl(200 20% 96%);
     }
-  }
+  } */
 }
 
 @layer base {
