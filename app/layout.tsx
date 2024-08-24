@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="roboto-regular">
       <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
+        <main className="">
           {children}
         </main>
       </body>
