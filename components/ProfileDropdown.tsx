@@ -16,6 +16,10 @@ const ProfileDropdown = ({user}: ProfileDropdownProps) => {
     console.log(isDropdownOpen);
   };
 
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  }
+
   return (
     <div>
       <button>
@@ -29,11 +33,20 @@ const ProfileDropdown = ({user}: ProfileDropdownProps) => {
         </div>
       </button>
       {isDropdownOpen && (
-        <div className="bg-white text-black text-base absolute right-5 flex flex-col shadow-lg mt-5 px-3 py-4">
-          <Link href="/">Go to Profile</Link>
-          <Link href="/">Settings</Link>
-          <Link href="/">Help</Link>
-          <Link href="/">Logout</Link>
+        <div onClick={closeDropdown} className="fixed inset-0 bg-transparent z-10">
+          <div onClick={e => {e.stopPropagation()}} className="bg-white text-black absolute right-6 mt-24 max-w-fit text-base flex flex-col shadow-lg px-3 py-4">
+            <div className="flex flex-col p-2">
+              <span className="italic">{user.email}</span>
+              <span>username</span>
+            </div>
+            <hr />  
+            <div className="flex flex-col p-2">
+              <Link href="/">Go to Profile</Link>
+              <Link href="/">Settings</Link>
+              <Link href="/">Help</Link>
+              <Link href="/">Logout</Link>
+            </div>
+          </div>
         </div>
       )}
     </div>
