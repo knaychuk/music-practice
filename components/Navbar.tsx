@@ -21,7 +21,7 @@ const Navbar = ({user}: NavbarProps) => {
   ];
 
   return (
-  <div className="sticky top-4 text-xl text-white flex justify-between bg-primary px-4 m-6 rounded-lg shadow-lg shadow-gray-300 h-16 z-50">
+  <div className="sticky top-4 text-base text-white flex justify-between bg-primary px-4 m-6 rounded-lg shadow-lg shadow-gray-300 h-16 z-50">
     <a href="/home" className="flex items-center">
       MP
     </a>
