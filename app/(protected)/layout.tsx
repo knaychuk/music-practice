@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar"
 import { createClient } from "@/utils/supabase/server";
+import { User } from "@/utils/types";
 
 export default async function ProtectedLayout({
   children, // will be a page or nested layout
@@ -14,9 +15,14 @@ export default async function ProtectedLayout({
 
   console.log(user);
 
+
+  const formattedUser: User = {
+    email: user!.email ?? '',  
+  }
+  
   return (
     <section>
-      <Navbar user={user || {}} />
+      <Navbar user={formattedUser} /> 
  
       {children}
     </section>

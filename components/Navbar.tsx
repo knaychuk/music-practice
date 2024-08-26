@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ProfileDropdown from "./ProfileDropdown";
+import { User } from "@/utils/types";
 
 export interface NavbarProps {
-  user: {};
+  user: User;
 }
 
 const Navbar = ({user}: NavbarProps) => {

@@ -4,13 +4,11 @@ import { signOut } from "@/utils/supabase/authLogout";
 // icons
 import { IoPersonCircleOutline, IoSettingsOutline, IoHelpCircleOutline, IoLogOutOutline} from "react-icons/io5";
 import { IoIosArrowForward } from "react-icons/io"
+import { User } from "@/utils/types";
 
-interface User {
-  email: string;
-}
 
 export interface ProfileDropdownProps {
-  user: User | null;
+  user: User;
 }
 
 const ProfileDropdown = ({user}: ProfileDropdownProps) => {
@@ -47,7 +45,9 @@ const ProfileDropdown = ({user}: ProfileDropdownProps) => {
         <div onClick={closeDropdown} className="fixed inset-0 bg-transparent z-10">
           <div onClick={e => {e.stopPropagation()}} className="bg-white text-black absolute right-6 mt-24 min-w-72 text-base flex flex-col shadow-lg rounded-lg">
             <div className="flex flex-col p-4">
+            {user && (
               <span className="italic">{user.email}</span>
+            )}
               <span>username</span>
             </div>
             <hr className="" />  
