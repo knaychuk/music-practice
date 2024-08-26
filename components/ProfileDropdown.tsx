@@ -5,18 +5,19 @@ import { signOut } from "@/utils/supabase/authLogout";
 import { IoPersonCircleOutline, IoSettingsOutline, IoHelpCircleOutline, IoLogOutOutline} from "react-icons/io5";
 import { IoIosArrowForward } from "react-icons/io"
 
+interface User {
+  email: string;
+}
+
 export interface ProfileDropdownProps {
-  user: {};
+  user: User | null;
 }
 
 const ProfileDropdown = ({user}: ProfileDropdownProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const userInitial = "";
 
-  if(user) {
-    const userInitial = user?.email?.charAt(0).toUpperCase();
-  }
-
+  const userInitial = user?.email?.charAt(0).toUpperCase();
+  
   const dropdownItems = [
     { name: 'Profile', path: '/profile', icon: IoPersonCircleOutline},
     { name: 'Settings', path: '/settings', icon: IoSettingsOutline},
