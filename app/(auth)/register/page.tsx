@@ -27,19 +27,40 @@ export default async function Register({
     const password = formData.get("password") as string;
     const supabase = createClient();
 
-    const { error } = await supabase.auth.signUp({
+    const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
     });
-
-    if (error) {
-      return redirect("/login?message=Could not authenticate user");
+       
+    if (authError) {
+      console.log(authError);
+      return redirect("/login?message=Could not authenticate user, please try again");
     }
 
-    return redirect("/login?message=Check email to continue sign in process");
+    const userId = authData?.user?.id;
+
+    if (!userId) {
+      console.error("Failed to retrieve user ID from auth data.");
+      return redirect("/login?message=Could not retrieve user ID, please try again.");
+    }
+
+    console.log(userId);
+
+    const { data: customAuthData, error: customAuthError } = await supabase.from('users').insert([
+      {
+        user_id: userId,
+        username: '',
+        theme: 'light',
+      }
+    ])
+
+    if (customAuthError) {
+      return redirect("/register?message=Could not authenticate user, please try again");
+
+    }
+    
+    // all actions are successful 
+    return redirect("/home?");
   };
   
 

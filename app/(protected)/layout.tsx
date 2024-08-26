@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar"
 import { createClient } from "@/utils/supabase/server";
 import { User } from "@/utils/types";
+import { redirect } from "next/navigation";
 
 export default async function ProtectedLayout({
   children, // will be a page or nested layout
@@ -13,11 +14,13 @@ export default async function ProtectedLayout({
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log(user);
-
+  if (!user) {
+    // Redirect to login if user is not authenticated
+    return redirect("/login");
+  }
 
   const formattedUser: User = {
-    email: user!.email ?? '',  
+    email: user.email ?? '',  
   }
   
   return (
