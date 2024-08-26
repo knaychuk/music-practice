@@ -11,8 +11,11 @@ export interface ProfileDropdownProps {
 
 const ProfileDropdown = ({user}: ProfileDropdownProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const userInitial = "";
 
-  const userInitial = user?.email?.charAt(0).toUpperCase();
+  if(user) {
+    const userInitial = user?.email?.charAt(0).toUpperCase();
+  }
 
   const dropdownItems = [
     { name: 'Profile', path: '/profile', icon: IoPersonCircleOutline},
