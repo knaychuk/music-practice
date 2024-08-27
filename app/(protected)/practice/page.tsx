@@ -1,13 +1,15 @@
 'use client'
 
+import PracticeEntryCard from '@/components/PracticeEntryCard';
 import { useState, useEffect } from 'react';
 
 interface PracticeEntry {
   id: number;
   user_id: string;
-  date: Date;
+  date: string;
   start_time: string;
   end_time: string;
+  desc: string;
 }
 
 const Practice = () => {
@@ -25,19 +27,19 @@ const Practice = () => {
   }, [])
 
   return (
-    <div>
-      <h1>Practice Log</h1>
-      <p>Total Hours:</p>
-
-      <div>
-        <button>Add New Practice</button>
+    <div className='px-14'>
+      <div className='flex flex-col'>
+        <h1 className='text-4xl'>Practice Log</h1>
+        <p className='text-2xl'>Total Hours:</p>
       </div>
-      {practiceEntries.map((practice) => (
-        <div>
-          <div>{practice.id}</div>
-          <div>{practice.user_id}</div>
-        </div>
+      <div className='m-2 text-right'>
+        <button className='bg-secondary px-3 py-2 rounded-md'>Add New Practice</button>
+      </div>
+      <div className='grid grid-cols-4 gap-4 '>
+      {practiceEntries.map((entry) => ( 
+        <PracticeEntryCard entry={entry} key={entry.id} />
       ))}
+      </div>
     </div>
   )
 }

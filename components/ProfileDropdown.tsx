@@ -35,7 +35,7 @@ const ProfileDropdown = ({user}: ProfileDropdownProps) => {
     <div>
       <button>
         <div 
-          className="bg-orange-500 rounded-full w-10 h-10 flex items-center justify-center text-white"
+          className="bg-secondary rounded-full w-10 h-10 flex items-center justify-center text-white"
           onClick={toggleDropdown}
         >
         {userInitial}

@@ -3,6 +3,7 @@ import { createClient } from "@/utils/supabase/server";
 import { User } from "@/utils/types";
 import { redirect } from "next/navigation";
 
+
 export default async function ProtectedLayout({
   children, // will be a page or nested layout
 }: {
