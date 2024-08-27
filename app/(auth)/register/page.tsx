@@ -44,8 +44,6 @@ export default async function Register({
       return redirect("/login?message=Could not retrieve user ID, please try again.");
     }
 
-    console.log(userId);
-
     const { data: customAuthData, error: customAuthError } = await supabase.from('users').insert([
       {
         user_id: userId,
