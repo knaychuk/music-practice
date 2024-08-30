@@ -14,6 +14,11 @@ export interface PracticeEntryCardProps {
 const calculatePracticeTime = (startTime: string, endTime: string): {hours: number, minutes: number} => {
   const start = new Date(`1970-01-01T${startTime}Z`);
   const end = new Date(`1970-01-01T${endTime}Z`);
+
+  if (end <= start) {
+    end.setTime(end.getTime() + 24 * 60 * 60 * 1000);
+  }
+
   const difference = end.getTime() - start.getTime();
   console.log(difference);
   const convertToMinutes = Math.floor(difference / (1000 * 60));
@@ -28,7 +33,7 @@ const PracticeEntryCard = ({entry}:PracticeEntryCardProps) => {
   const { hours, minutes } = calculatePracticeTime(entry.start_time, entry.end_time);
 
   return (
-    <div className="bg-neutral px-6 py-4 rounded-lg shadow-sm">
+    <div className="bg-neutral px-6 py-4 rounded-lg shadow-sm max-w-[350px]">
       <div className="flex justify-between">
         <div>
           <h2 className="text-2xl font-bold">Monday</h2>
