@@ -38,9 +38,9 @@ const Practice = () => {
       </div>
       <div className='m-2 flex justify-end'>
         {/* <button className='bg-primary px-3 py-2 rounded-md text-white'>Add New</button> */}
-        <button className="flex flex-row items-center relative text-white text-base bg-primary py-2 px-4 rounded-lg shadow-lg transition-all duration-500 ease-in-out hover:pr-10 hover:pl-4">
+        <button id='hoverButton' className="flex flex-row items-center relative text-white text-base bg-primary py-2 px-4 rounded-lg shadow-lg transition-all duration-500 ease-in-out hover:pr-10 hover:pl-4">
           <span className="relative z-10">Add New</span>
-          <span className="absolute top-0 right-[-20px] opacity-0 transition-all duration-500 ease-in-out text-2xl">   
+          <span className="absolute text-white right-[-20px] opacity-0 transition-all duration-500 ease-in-out text-2xl">   
             <IoIosAddCircleOutline />
           </span>
         </button>     

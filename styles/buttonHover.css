@@ -1,4 +1,4 @@
-button span:last-child {
+#hoverButton span:last-child {
   position: absolute;
   top: auto;
   right: -20px;
@@ -6,7 +6,7 @@ button span:last-child {
   transition: all 340ms ease-in-out;
 }
 
-button:hover span:last-child {
+#hoverButton:hover span:last-child {
   opacity: 1;
   right: 10px;
 }
