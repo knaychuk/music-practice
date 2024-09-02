@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 // icons
 import { TbEdit } from "react-icons/tb";
+import { GoDash } from "react-icons/go";
 
 export interface PracticeEntryCardProps {
   entry: {
@@ -12,12 +13,13 @@ export interface PracticeEntryCardProps {
     end_time: string;
     desc: string;
   }
+  handleUpdate: () => void;
 }
 
-const getDay = ({entry}: PracticeEntryCardProps) => {
-  const date = new Date(entry.date);
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday;', 'Saturday'];
-  return days[date.getDay()];
+const getDay = (date: any) => {
+  const newDate = new Date(date);
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  return days[newDate.getDay()];
 }
 
 const calculatePracticeTime = (startTime: string, endTime: string): {hours: number, minutes: number} => {
@@ -38,16 +40,18 @@ const calculatePracticeTime = (startTime: string, endTime: string): {hours: numb
   return { hours, minutes };
 }
 
-const PracticeEntryCard = ({entry}:PracticeEntryCardProps) => {
+const PracticeEntryCard = ({entry, handleUpdate}:PracticeEntryCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [day, setDay] = useState('');
   const [date, setDate] = useState(entry.date);
+  const [startTime, setStartTime] = useState(entry.start_time);
+  const [endTime, setEndTime] = useState(entry.end_time);
   const [desc, setDesc] = useState(entry.desc);
 
   const { hours, minutes } = calculatePracticeTime(entry.start_time, entry.end_time);
 
   useEffect(() => {
-    setDay(getDay({entry}));
+    setDay(getDay(entry.date));
   }, [])
  
   const editCard = () => {
@@ -55,46 +59,92 @@ const PracticeEntryCard = ({entry}:PracticeEntryCardProps) => {
   }
 
   const handleSave = async () => {
+    const updatedEntry = {
+      id: entry.id,
+      date: date,
+      startTime: startTime,
+      endTime: endTime,
+      desc: desc,
+    }
+
+    const response = await fetch('/api/practice', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedEntry),
+        
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to update the entry');
+    }
+
+    const responseData = await response.json();
+    handleUpdate();
     setIsEditing(false);
-  }
+  };  
 
   return (
     <div>
       {!isEditing && 
-      <div className="bg-neutral px-6 py-4 rounded-lg shadow-sm max-w-[350px]">
+      <div className="bg-neutral px-6 py-4 rounded-lg shadow-sm h-[165px] max-w-[350px]">
         <div className="flex justify-between">
           <div>
-            <h2 className="text-2xl font-bold">{day}</h2>
+            <h2 className="text-xl font-bold">{day}</h2>
              <h3 className="text-base">{entry.date}</h3>
           </div>
           <p className="mt-[2px]">{hours} hour(s) {minutes} minute(s)</p>
         </div>
         <p className="mt-3">{entry.desc}</p>
-        <button onClick={editCard} className="mt-3"><TbEdit className="text-2xl"/></button>  
+        <div className="flex flex-row justify-end">
+          <button onClick={editCard} className="mt-3"><TbEdit className="text-2xl"/></button>  
+        </div>
       </div>
       }
 
       {isEditing && 
-        <div className="bg-neutral px-6 py-4 rounded-lg shadow-sm max-w-[350px]">
-          <div className="flex justify-between">
-            <div>
-              <h2 className="text-2xl font-bold">Monday</h2>
-              <input type="date"
+        <div className="bg-neutral px-6 py-4 rounded-lg shadow-sm h-[165px] max-w-[350px] outline outline-1 outline-primary">
+          <div>
+            <div className="flex justify-between">
+              <h2 className="text-xl font-bold text-primary">{day}</h2>
+              <div className="flex flex-row ml-2 items-center">
+                <input 
+                  type="time" 
+                  value={startTime}
+                  onChange={(e) => setStartTime(e.target.value)}
+                  placeholder="10:00" 
+                  className="bg-neutral-light outline outline-1 outline-black max-w-20 text-center text-sm p-1"
+                />
+                <GoDash />
+                <input 
+                  type="time" 
+                  value={endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
+                  placeholder="13:00" 
+                  className="bg-neutral-light outline outline-1 outline-black max-w-20 text-center text-sm p-1" 
+                />
+              </div>
+            </div>
+            <div className="mt-2">
+              <input 
+                type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+                className="bg-neutral-light outline outline-1 outline-black"
               />
             </div>
-          </div>
-          <div className="flex flex-row min-w-fit">
-              <input type="text" placeholder="e.g., 10:00" />
-              <span>-</span>
-              <input type="text" placeholder="e.g., 13:00" />
-          </div>  
+          </div>   
+          <div className="flex flex-row justify-between mt-2">
           <textarea
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
+            className="bg-neutral-light outline outline-1 outline-black px-1 h-14"
           />
-         <button onClick={handleSave} className="mt-3"><TbEdit className="text-2xl"/></button>  
+         <button 
+            onClick={handleSave} className="bg-primary text-sm text-white rounded-md h-fit w-fit mt-6 px-2 py-1 hover:bg-primary-hover">Save</button>  
+          </div>
        </div>
       }
     </div>

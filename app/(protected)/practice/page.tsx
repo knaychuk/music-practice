@@ -2,7 +2,7 @@
 
 import '../../../styles/buttonHover.css'
 import PracticeEntryCard from '@/components/PracticeEntryCard';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 // icons
 import { IoIosAddCircleOutline } from 'react-icons/io';
@@ -19,16 +19,19 @@ interface PracticeEntry {
 const Practice = () => {
   const [practiceEntries, setPracticeEntries] = useState<PracticeEntry[]>([]);
 
+  const fetchPractice = useCallback(async () => {
+    const response = await fetch('/api/practice');
+    const data = await response.json();
+    setPracticeEntries(data);
+  }, []);
+  
   useEffect(() => {
-    const fetchPractice = async () => {
-      const response = await fetch('/api/practice');
-      const data = await response.json();
-      console.log(data);
-      setPracticeEntries(data);
-    }
     fetchPractice();
+  }, []);
 
-  }, [])
+  const handleUpdate = () => {
+    fetchPractice();
+  }
 
   return (
     <div className='px-14'>
@@ -47,7 +50,7 @@ const Practice = () => {
       </div>
       <div className='grid grid-cols-4 gap-4 '>
       {practiceEntries && practiceEntries.map((entry) => ( 
-        <PracticeEntryCard entry={entry} key={entry.id} />
+        <PracticeEntryCard entry={entry} key={entry.id} handleUpdate={handleUpdate} />
       ))}
       </div>
     </div>

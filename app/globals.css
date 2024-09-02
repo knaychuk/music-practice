@@ -8,9 +8,10 @@
   :root {
     /* colors */
     --color-primary: hsl(0, 66%, 47%);
-    --color-primary-hover: hsl(0, 75%, 34%); 
+    --color-primary-hover: hsl(0, 73%, 40%); 
     --color-secondary: hsl(16.61, 81.16%, 72.94%); 
     --color-neutral: hsl(0, 28.57%, 94.51%);
+    --color-neutral-light: hsl(0, 57%, 97%);
     
     --background: hsl(200 20% 98%);
     --btn-background: hsl(200 10% 91%);

@@ -17,6 +17,7 @@ module.exports = {
         "primary-hover": "var(--color-primary-hover)",
         secondary: "var(--color-secondary)",
         neutral: "var(--color-neutral)",
+        "neutral-light": "var(--color-neutral-light)",
       },
     },
   },
