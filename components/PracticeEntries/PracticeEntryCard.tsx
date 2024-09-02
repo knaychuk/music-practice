@@ -100,7 +100,7 @@ const PracticeEntryCard = ({entry, handleUpdate}:PracticeEntryCardProps) => {
         </div>
         <p className="mt-3">{entry.desc}</p>
         <div className="flex flex-row justify-end">
-          <button onClick={editCard} className="mt-3"><TbEdit className="text-2xl"/></button>  
+          <button onClick={editCard} className="mt-3"><TbEdit className="text-2xl hover:text-primary hover:text-[28px] transition-all ease-in-out"/></button>  
         </div>
       </div>
       }
