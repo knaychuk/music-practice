@@ -83,6 +83,7 @@ const PracticeEntryCard = ({entry, handleUpdate}:PracticeEntryCardProps) => {
 
     const responseData = await response.json();
     handleUpdate();
+    setDay(getDay(updatedEntry.date));
     setIsEditing(false);
   };  
 
