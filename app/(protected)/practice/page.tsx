@@ -20,7 +20,6 @@ interface PracticeEntry {
 const Practice = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [practiceEntries, setPracticeEntries] = useState<PracticeEntry[]>([]);
-  const [newEntry, setNewEntry] = useState<Partial<PracticeEntry>>({});
 
   const fetchPractice = useCallback(async () => {
     const response = await fetch('/api/practice');
@@ -38,7 +37,6 @@ const Practice = () => {
 
   const handleAddNew = () => {
     setIsCreating(true);
-    setNewEntry({ date: '', start_time: '00:00:00', end_time: '', desc: '' });
   };
 
   const handleCancel = () => {
@@ -68,6 +66,8 @@ const Practice = () => {
       {isCreating && 
         <PracticeEntryForm
           handleCancel={handleCancel}
+          setIsCreating={setIsCreating}
+          fetchPractice={fetchPractice}
         />
       } 
 
