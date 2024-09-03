@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 //icons
 import { GoDash } from "react-icons/go";
 
@@ -6,22 +8,49 @@ interface PracticeEntryFormProps {
 }
 
 const PracticeEntryForm = ({ handleCancel } : PracticeEntryFormProps) => {
+  const [date, setDate] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [desc, setDesc] = useState('');
 
   const handleAdd = async () => {
+    const newEntry = {
+      date: date,
+      startTime: startTime,
+      endTime: endTime,
+      desc: desc,
+    }
+
+    // console.log(newEntry);
+
+    const response = await fetch('/api/practice', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newEntry),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to add the entry');
+    }
+
 
   }
+
   return (
   <div className="bg-neutral px-6 py-4 rounded-lg shadow-sm h-[165px] max-w-[350px] outline outline-1 outline-primary">
     <div>
       <div className="flex justify-between">
         {/* <h2 className="text-xl font-bold text-primary">{day}</h2> */}
-        <div className="flex flex-row ml-2 items-center">
+        <div className="flex flex-row items-center">
           <label className="">
             Time:
             <input 
               type="time" 
-              // value={startTime}
-              // onChange={(e) => setStartTime(e.target.value)}
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
               placeholder="10:00" 
               className="bg-neutral-light outline outline-1 outline-black max-w-20 text-center text-sm p-1 ml-4"
               required
@@ -30,8 +59,8 @@ const PracticeEntryForm = ({ handleCancel } : PracticeEntryFormProps) => {
           <GoDash />
             <input 
               type="time" 
-              // value={endTime}
-              // onChange={(e) => setEndTime(e.target.value)}
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
               placeholder="13:00" 
               className="bg-neutral-light outline outline-1 outline-black max-w-20 text-center text-sm p-1"
               required
@@ -43,8 +72,8 @@ const PracticeEntryForm = ({ handleCancel } : PracticeEntryFormProps) => {
           Date:
           <input 
             type="date"
-            // value={date}
-            // onChange={(e) => setDate(e.target.value)}
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
             className="bg-neutral-light outline outline-1 outline-black mx-4"
             required
           />
@@ -53,10 +82,10 @@ const PracticeEntryForm = ({ handleCancel } : PracticeEntryFormProps) => {
     </div>   
     <div className="flex flex-row justify-between mt-2">
       <label>
-        What did you work on?:
+        What did you work on today?
         <textarea
-          // value={desc}
-          // onChange={(e) => setDesc(e.target.value)}
+          value={desc}
+          onChange={(e) => setDesc(e.target.value)}
           className="bg-neutral-light outline outline-1 outline-black px-1 h-12 w-[200px]"
         />
       </label>

@@ -74,5 +74,33 @@ export async function PATCH(request: NextRequest) {
       throw err;
     }
   }
+}
 
+export async function POST(request: NextRequest) {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if(user) {
+    try {
+      const body = await request.json();
+      const { date, startTime, endTime, desc } = body;
+      console.log(body);
+
+      const { data, error } = await supabase
+        .from('practice_entries')
+        .insert({ user_id: user.id, date: date, start_time: startTime, end_time: endTime, desc: desc });
+
+        if (error) {
+          throw error;
+        }
+
+        return NextResponse.json(data);
+
+    } catch (err) {
+      throw err;
+    }
+  }
 }

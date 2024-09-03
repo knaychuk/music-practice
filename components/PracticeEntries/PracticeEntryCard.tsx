@@ -81,7 +81,7 @@ const PracticeEntryCard = ({entry, handleUpdate}:PracticeEntryCardProps) => {
       throw new Error(errorData.error || 'Failed to update the entry');
     }
 
-    const responseData = await response.json();
+    // const responseData = await response.json();
     handleUpdate();
     setDay(getDay(updatedEntry.date));
     setIsEditing(false);
