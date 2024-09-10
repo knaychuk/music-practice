@@ -22,7 +22,7 @@ const getDay = (date: any) => {
   return days[newDate.getDay()];
 }
 
-const calculatePracticeTime = (startTime: string, endTime: string): {hours: number, minutes: number} => {
+export const calculatePracticeTime = (startTime: string, endTime: string): {hours: number, minutes: number} => {
   const start = new Date(`1970-01-01T${startTime}Z`);
   const end = new Date(`1970-01-01T${endTime}Z`);
 
@@ -96,7 +96,9 @@ const PracticeEntryCard = ({entry, handleUpdate}:PracticeEntryCardProps) => {
             <h2 className="text-xl font-bold">{day}</h2>
              <h3 className="text-base">{entry.date}</h3>
           </div>
-          <p className="mt-[2px]">{hours} hour(s) {minutes} minute(s)</p>
+          {minutes == 0 &&  <p className="mt-[2px]">{hours} hour(s)</p>}
+          {minutes != 0 &&  <p className="mt-[2px]">{hours} hour(s) {minutes} minute(s)</p>}
+         
         </div>
         <p className="mt-3">{entry.desc}</p>
         <div className="flex flex-row justify-end">

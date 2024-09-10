@@ -78,6 +78,7 @@ export async function PATCH(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const supabase = createClient();
+  let existingHistory = [];
 
   const {
     data: { user },
@@ -86,16 +87,41 @@ export async function POST(request: NextRequest) {
   if(user) {
     try {
       const body = await request.json();
-      const { date, startTime, endTime, desc } = body;
+      // date, startTime, endTime, desc are from user input | hours, minutes from calculatePracticeTime function
+      const { date, startTime, endTime, desc, hours, minutes } = body;
       console.log(body);
 
+      // INSERT NEW PRACTICE ENTRY
       const { data, error } = await supabase
         .from('practice_entries')
         .insert({ user_id: user.id, date: date, start_time: startTime, end_time: endTime, desc: desc });
 
-        if (error) {
-          throw error;
-        }
+      if (error) {
+        throw error;
+      }
+
+      // GET PRACTICE HISTORY FOR USER
+      const { data: historyData, error: historyError } = await supabase
+        .from('practice_history')
+        .select()
+        .eq('user_id', user.id);
+
+      if (historyError) {
+        throw historyError;
+      }
+
+      if (historyData && historyData.length > 0) {
+        existingHistory = historyData[0];
+      } 
+
+      const { total_hours, total_minutes } = existingHistory;   
+
+      // INSERT NEW PRACTICE HISTORY
+
+      // UPDATE EXISTING PRACTICE HISTORY
+     
+        
+
 
         return NextResponse.json(data);
 

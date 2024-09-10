@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { calculatePracticeTime } from "./PracticeEntryCard";
 
 //icons
 import { GoDash } from "react-icons/go";
@@ -24,14 +25,18 @@ const PracticeEntryForm = ({ handleCancel, setIsCreating, fetchPractice } : Prac
       return;
     }
 
+    const totalTime = calculatePracticeTime(startTime, endTime);
+
     const newEntry = {
       date: date,
       startTime: startTime,
       endTime: endTime,
       desc: desc,
+      hours: totalTime.hours,
+      minutes: totalTime.minutes
     }
 
-    // console.log(newEntry);
+    console.log(newEntry);
 
     const response = await fetch('/api/practice', {
       method: 'POST',
@@ -42,8 +47,8 @@ const PracticeEntryForm = ({ handleCancel, setIsCreating, fetchPractice } : Prac
     });
 
     if (!response.ok) {
-      // const errorData = await response.json();
-      // throw new Error(errorData.error || 'Failed to add the entry');
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to add the entry');
     }
 
     setIsCreating(false);
