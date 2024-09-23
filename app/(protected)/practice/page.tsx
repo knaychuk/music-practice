@@ -62,7 +62,7 @@ const Practice = () => {
           </span>
         </button>     
       </div>
-      <div className='grid grid-cols-4 gap-4 '>
+      <div className='grid grid-cols-1 sm:grid-cols-4 2xl:grid-cols-4 gap-5 max-w-[2000px] mx-auto px-4'>
       {isCreating && 
         <PracticeEntryForm
           handleCancel={handleCancel}

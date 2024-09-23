@@ -130,3 +130,22 @@ export async function POST(request: NextRequest) {
     }
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  const supabase = createClient();
+
+  try {
+    const body = await request.json();
+    const { id } = body;
+
+    const response = await supabase
+    .from('practice_entries')
+    .delete()
+    .eq('id', id);
+
+    return NextResponse.json(data);
+
+  } catch (err) { 
+    throw err;
+  }
+}
