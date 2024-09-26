@@ -21,8 +21,8 @@ const SheetMusic = () => {
     try {
       const response = await fetch('/api/getUserId');
       const data = await response.json();
-      if (data.userId) {
-        setUserId(data.userId);
+      if (data.id) {
+        setUserId(data.id);
         console.log(userId);
       } else {
         setUserId('');
@@ -64,12 +64,13 @@ const SheetMusic = () => {
   };
 
   const handleUpload = async () => {
+    const path = `${userId}/${uuidv4()}`
 
     if(file) {
       const { data, error } = await supabase
         .storage
         .from('sheet-music')
-        .upload(userId + "/" + uuidv4(), file)
+        .upload(path, file)
 
       if (data) {
         getSheetMusic();

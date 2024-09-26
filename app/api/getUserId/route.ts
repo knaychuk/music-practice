@@ -9,6 +9,9 @@ export async function GET(request: NextRequest, response: NextResponse) {
     error,
   } = await supabase.auth.getUser();
 
+
+  console.log(user);
+
   if (error) {
     error
     return;
