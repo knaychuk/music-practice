@@ -99,16 +99,16 @@ const SheetMusic = () => {
       {/* <div>
         {sheetMusic.map((sheet: FileObject) => (
           <div>
-          <img
+          <embed
             src={`https://bjpnluypnffrblhymtbz.supabase.co/storage/v1/object/public/sheet-music/${userId}/${sheet.name}`}
             // alt={sheet.name}
           />          
           </div>
         ))}
       </div> */}
-      <div>
+      {/* <div>
         <iframe src="https://bjpnluypnffrblhymtbz.supabase.co/storage/v1/object/public/sheet-music/fde22755-ab0d-46bb-8982-6854486f68fb/1bd55283-e735-4810-8bb5-2b38d362cdde" />
-      </div>
+      </div> */}
 
       {isCreating && 
       <div 
