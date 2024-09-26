@@ -18,7 +18,14 @@ const SheetMusicCard = ( {userId, sheetName}: SheetMusicProps ) => {
     <div className="bg-neutral mx-4 px-5 pt-8 pb-4 rounded-md">
       <div className="flex flex-row justify-between">
         <h2 className="text-2xl">Sheet Music Title</h2>
-        <GenericButton buttonText="View" clickFunction={handleOpen} />
+        {/* <GenericButton buttonText="View" clickFunction={handleOpen} /> */}
+        <a 
+          href={`https://bjpnluypnffrblhymtbz.supabase.co/storage/v1/object/public/sheet-music/${userId}/${sheetName}`}
+          className="py-2 px-4 rounded-lg shadow-md bg-primary text-white hover:bg-primary-hover"
+          target="_blank"
+        >
+          View
+        </a>
       </div>
       <div className="mb-2">
         <p>Composer:</p>
