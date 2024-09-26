@@ -5,6 +5,8 @@ import { useState, useEffect } from "react"
 import { v4 as uuidv4 } from 'uuid';
 import { createClient } from "@/utils/supabase/client";
 import { FileObject } from '@supabase/storage-js'; 
+import SheetMusicCard from "@/components/SheetMusic/SheetMusicCard";
+import GenericButton from "@/components/Buttons/GenericButton";
 
 const SheetMusic = () => {
   const [sheetMusic, setSheetMusic] = useState<FileObject[]>([]);
@@ -96,20 +98,12 @@ const SheetMusic = () => {
       <div className='m-2 flex justify-end'>
         <AddNewButton buttonText='Upload New' clickFunction={handleCreate} />
       </div>
-      {/* <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {sheetMusic.map((sheet: FileObject) => (
-          <div>
-          <embed
-            src={`https://bjpnluypnffrblhymtbz.supabase.co/storage/v1/object/public/sheet-music/${userId}/${sheet.name}`}
-            // alt={sheet.name}
-          />          
-          </div>
+            <SheetMusicCard userId={userId} sheetName={sheet.name} />
         ))}
-      </div> */}
-      {/* <div>
-        <iframe src="https://bjpnluypnffrblhymtbz.supabase.co/storage/v1/object/public/sheet-music/fde22755-ab0d-46bb-8982-6854486f68fb/1bd55283-e735-4810-8bb5-2b38d362cdde" />
-      </div> */}
-
+      </div>
+  
       {isCreating && 
       <div 
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
@@ -157,16 +151,11 @@ const SheetMusic = () => {
         <div className="flex justify-end space-x-3">
           <button 
             onClick={handleCancel} 
-            className="py-2 px-4 rounded-lg shadow-lg bg-gray-200 text-gray-800  hover:bg-gray-300"
+            className="py-2 px-4 rounded-lg shadow-md bg-gray-200 text-gray-800  hover:bg-gray-300"
           >
             Cancel
           </button>
-          <button 
-            onClick={handleUpload} 
-            className="py-2 px-4 rounded-lg shadow-lg bg-primary text-white  hover:bg-primary-hover"
-          >
-            Save
-          </button>
+          <GenericButton buttonText="Save" clickFunction={handleUpload} />
         </div>
       </div>
     </div>
