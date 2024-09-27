@@ -1,17 +1,27 @@
-import GenericButton from "../Buttons/GenericButton";
+'use client'
+
+import { useState } from 'react';
 
 // icons
 import { FaRegTrashAlt } from "react-icons/fa";
+import ConfirmModal from '../ConfirmModal';
 
 interface SheetMusicProps {
   userId: string;
   sheetName: string;
+
+  handleDelete: (sheetName: string) => void;
 }
 
-const SheetMusicCard = ( {userId, sheetName}: SheetMusicProps ) => {
+const SheetMusicCard = ( {userId, sheetName, handleDelete }: SheetMusicProps ) => {
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  const handleOpen = () => {
+  const handleShowModal = () => {
+    setShowConfirmModal(true);
+  }
 
+  const handleCloseModal = () => {
+    setShowConfirmModal(false);
   }
 
   return (
@@ -40,10 +50,14 @@ const SheetMusicCard = ( {userId, sheetName}: SheetMusicProps ) => {
         />   
       </div>
       <div className="flex flex-row justify-end">
-        <button className="text-xl mt-4">
+        <button className="text-xl mt-4 hover:text-primary" onClick={handleShowModal}>
           <FaRegTrashAlt />
         </button>
       </div>
+      {showConfirmModal && 
+        <ConfirmModal confirmFunction={() => handleDelete(sheetName)} cancelFunction={handleCloseModal} />
+      }
+
     </div>     
   )
 }

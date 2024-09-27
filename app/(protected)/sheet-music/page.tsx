@@ -59,6 +59,10 @@ const SheetMusic = () => {
     setIsCreating(true);
   }
 
+  const handleCancel = () => {
+    setIsCreating(false);
+  }
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFile(e.target.files[0]);
@@ -84,8 +88,17 @@ const SheetMusic = () => {
 
   }
 
-  const handleCancel = () => {
-    setIsCreating(false);
+  const handleDelete = async (sheetName: string) => {
+    const { error } = await supabase
+      .storage
+      .from('sheet-music')
+      .remove([ userId + '/' + sheetName ])
+
+    if (error) {
+      alert(error)
+    } else {
+      getSheetMusic();
+    }
   }
 
   useEffect(() => {
@@ -100,7 +113,7 @@ const SheetMusic = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {sheetMusic.map((sheet: FileObject) => (
-            <SheetMusicCard userId={userId} sheetName={sheet.name} />
+            <SheetMusicCard key={sheet.id} userId={userId} sheetName={sheet.name} handleDelete={handleDelete}/>
         ))}
       </div>
   
