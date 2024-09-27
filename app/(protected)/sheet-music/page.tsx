@@ -8,7 +8,12 @@ import { FileObject } from '@supabase/storage-js';
 import SheetMusicCard from "@/components/SheetMusic/SheetMusicCard";
 import GenericButton from "@/components/Buttons/GenericButton";
 
+interface SheetMusicData {
+
+}
+
 const SheetMusic = () => {
+  const [sheetMusicData, setSheetMusicData] = useState<SheetMusicData[]>([]);
   const [sheetMusic, setSheetMusic] = useState<FileObject[]>([]);
   const [file, setFile] =  useState<File | null>(null);
   const [title, setTitle] = useState('');
@@ -57,6 +62,7 @@ const SheetMusic = () => {
 
   const handleCreate = () => {
     setIsCreating(true);
+    setFile(null);
   }
 
   const handleCancel = () => {
@@ -72,19 +78,38 @@ const SheetMusic = () => {
   const handleUpload = async () => {
     const path = `${userId}/${uuidv4()}`
 
-    if(file) {
+    if(file && composer && arrangedBy) {
       const { data, error } = await supabase
         .storage
         .from('sheet-music')
         .upload(path, file)
 
+      if (error) {
+        throw error;
+      }
+
+      const { data: sheetMusicData, error: sheetMusicDataError } = await supabase
+        .from('sheet_music')
+        .insert({ user_id: userId, title: title, composer: composer, arranged_by: arrangedBy, file_path: path })
+        
+      if (sheetMusicDataError) {
+        throw sheetMusicDataError;
+      }
+
       if (data) {
         getSheetMusic();
+        setFile(null);
+        setTitle('');
+        setComposer('');
+        setArrangedBy('');
       } else {
         console.log(error);
       }
 
+    } else {
+      alert('All required fields must be filled');
     }
+
 
   }
 
@@ -157,7 +182,7 @@ const SheetMusic = () => {
             type="text"
             placeholder="Arranged By"
             value={arrangedBy}
-            onChange={(e) => setComposer(e.target.value)}
+            onChange={(e) => setArrangedBy(e.target.value)}
             className="w-full p-2 border rounded"
           />
         </div>
