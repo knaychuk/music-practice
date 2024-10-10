@@ -8,10 +8,10 @@ interface PracticeEntryFormProps {
   handleCancel: () => void;
   setIsCreating: React.Dispatch<React.SetStateAction<boolean>>;
   fetchPractice: () => void;
-
+  fetchPracticeHistory: () => void;
 }
 
-const PracticeEntryForm = ({ handleCancel, setIsCreating, fetchPractice } : PracticeEntryFormProps) => {
+const PracticeEntryForm = ({ handleCancel, setIsCreating, fetchPractice, fetchPracticeHistory } : PracticeEntryFormProps) => {
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -53,6 +53,7 @@ const PracticeEntryForm = ({ handleCancel, setIsCreating, fetchPractice } : Prac
 
     setIsCreating(false);
     fetchPractice()
+    fetchPracticeHistory();
 
   }
 

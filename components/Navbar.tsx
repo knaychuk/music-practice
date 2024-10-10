@@ -13,7 +13,7 @@ const Navbar = ({user}: NavbarProps) => {
   const pathname = usePathname();
 
   const navItems = [
-    { name: 'Home', path: '/home' },
+    // { name: 'Home', path: '/home' },
     { name: 'Practice', path: '/practice' },
     { name: 'Sheet Music', path: '/sheet-music' },
     { name: 'Tuner', path: '/tuner' },

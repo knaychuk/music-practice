@@ -15,22 +15,52 @@ interface PracticeEntry {
   desc: string;
 }
 
+interface PracticeHistory {
+  id: number;
+  user_id: string;
+  streak: number | null;
+  total_hours: number;
+  week_hours: number | null;
+  total_days: number | null;
+  week_days: number | null;
+  created_at: string;
+  total_minutes: number;
+}
+
 const Practice = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [practiceEntries, setPracticeEntries] = useState<PracticeEntry[]>([]);
+  const [practiceHistory, setPracticeHistory] = useState<PracticeHistory | null>(null);
 
   const fetchPractice = useCallback(async () => {
     const response = await fetch('/api/practice');
     const data = await response.json();
     setPracticeEntries(data);
   }, []);
+
+  // const fetchPracticeHistory = useCallback(async () => {
+  //   const response = await fetch('/api/practice_history');
+  //   const data = await response.json();
+  //   setPracticeHistory(data);
+  //   console.log(practiceHistory);
+  // }, [])
+
+  const fetchPracticeHistory = async () => {
+    const response = await fetch('/api/practice_history');
+    const data = await response.json();
+    console.log(data);
+    setPracticeHistory(data);
+  }
+
   
   useEffect(() => {
     fetchPractice();
+    fetchPracticeHistory();
   }, []);
 
   const handleUpdate = () => {
     fetchPractice();
+    fetchPracticeHistory();
   };
 
   const handleAddNew = () => {
@@ -45,7 +75,7 @@ const Practice = () => {
     <div className='px-14'>
       <div className='flex flex-col'>
         <h1 className='text-4xl'>Practice Log</h1>
-        <p className='text-2xl'>Total Hours:</p>
+        <p className='text-2xl'>Total Hours: {practiceHistory?.total_hours}</p>
       </div>
       <div className='m-2 flex justify-end'>
         <AddNewButton buttonText='Add New' clickFunction={handleAddNew} />
@@ -56,6 +86,7 @@ const Practice = () => {
           handleCancel={handleCancel}
           setIsCreating={setIsCreating}
           fetchPractice={fetchPractice}
+          fetchPracticeHistory={fetchPracticeHistory}
         />
       } 
 

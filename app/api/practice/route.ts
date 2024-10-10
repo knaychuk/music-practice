@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 import { data } from 'autoprefixer';
+import { calculatePracticeTime } from '@/components/PracticeEntries/PracticeEntryCard';
 
 export async function GET(request: NextRequest) {
   
@@ -116,12 +117,13 @@ export async function POST(request: NextRequest) {
 
       const { total_hours, total_minutes } = existingHistory;   
 
-      // INSERT NEW PRACTICE HISTORY
-
       // UPDATE EXISTING PRACTICE HISTORY
-     
-        
 
+      const { data: updateHistoryData, error: updateHistoryError } = await supabase
+        .from('practice_history')
+        .update({ total_hours: total_hours + hours, total_minutes: total_minutes + minutes})
+        .eq('user_id', user.id)
+        .select();
 
         return NextResponse.json(data);
 
