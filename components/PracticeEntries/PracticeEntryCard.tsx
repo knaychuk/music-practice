@@ -101,10 +101,10 @@ const PracticeEntryCard = ({ entry, handleUpdate }:PracticeEntryCardProps) => {
   const handleDelete = async () => {
       const response = await fetch('/api/practice', {
         method: 'DELETE',
-        body: JSON.stringify({ id: entry.id }),
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ id: entry.id, hours: hours, minutes: minutes }),
       })
 
       if (!response.ok) {

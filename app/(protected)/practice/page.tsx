@@ -75,7 +75,7 @@ const Practice = () => {
     <div className='px-14'>
       <div className='flex flex-col'>
         <h1 className='text-4xl'>Practice Log</h1>
-        <p className='text-2xl'>Total Hours: {practiceHistory?.total_hours}</p>
+        <p className='text-2xl'>Total Time: {practiceHistory?.total_hours} Hours {practiceHistory?.total_minutes} Minutes</p>
       </div>
       <div className='m-2 flex justify-end'>
         <AddNewButton buttonText='Add New' clickFunction={handleAddNew} />

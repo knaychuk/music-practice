@@ -135,19 +135,46 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   const supabase = createClient();
+  let existingHistory = [];
 
-  try {
-    const body = await request.json();
-    const { id } = body;
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-    const response = await supabase
-    .from('practice_entries')
-    .delete()
-    .eq('id', id);
+  if(user) {
+    try {
+      const body = await request.json();
+      const { id, hours, minutes } = body;
 
-    return NextResponse.json(data);
+      const { data: historyData, error: historyError } = await supabase
+        .from('practice_history')
+        .select()
+        .eq('user_id', user.id);
 
-  } catch (err) { 
-    throw err;
+      if (historyError) {
+        throw historyError;
+      }
+
+      if (historyData && historyData.length > 0) {
+        existingHistory = historyData[0];
+      } 
+
+      const { total_hours, total_minutes } = existingHistory;   
+
+      const { data: deleteHistoryData, error: deleteHistoryError } = await supabase
+        .from('practice_history')
+        .update({ total_hours: total_hours - hours, total_minutes: total_minutes - minutes })
+        .eq('user_id', user.id);
+
+      const { data: deletedEntryData, error: deletedEntryError } = await supabase
+      .from('practice_entries')
+      .delete()
+      .eq('id', id);
+
+      return NextResponse.json(data);
+
+    } catch (err) { 
+      throw err;
+    }
   }
 }
